@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mustahiq - Zakat Pintar</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #fbbf24;
+            --dark-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+            --border-color: #e5e7eb;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--dark-color); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        /* NAVBAR */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 5%; background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links li a:hover { color: var(--primary-color); }
+        .btn-login {
+            background-color: var(--primary-color); color: var(--white);
+            padding: 0.7rem 1.5rem; border-radius: 50px; font-weight: 600;
+            border: 2px solid var(--primary-color); transition: var(--transition);
+        }
+        .btn-login:hover { background-color: transparent; color: var(--primary-color); }
+
+        /* HEADER */
+        .page-header {
+            background-color: var(--primary-color); color: var(--white);
+            padding: 120px 5% 60px; text-align: center;
+        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .page-header p { opacity: 0.9; }
+
+        /* DATA SECTION */
+        .data-section { padding: 3rem 5%; min-height: 60vh; }
+        
+        .table-container {
+            background: var(--white); border-radius: 15px; padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow-x: auto;
+        }
+
+        .table-actions {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;
+        }
+
+        .search-box {
+            display: flex; align-items: center; gap: 10px;
+            background: #f9fafb; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--border-color);
+        }
+        .search-box input { border: none; background: transparent; outline: none; font-size: 0.9rem; }
+
+        .btn-add {
+            background-color: var(--primary-color); color: var(--white);
+            padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; transition: var(--transition);
+        }
+        .btn-add:hover { background-color: #064e3b; }
+
+        /* TABLE STYLES */
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #f9fafb; color: #6b7280; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        tr:hover { background-color: #f0fdf4; }
+
+        /* STATUS BADGES */
+        .badge { padding: 5px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+        .badge.verified { background-color: #d1fae5; color: #065f46; } /* Hijau */
+        .badge.pending { background-color: #fef3c7; color: #92400e; } /* Kuning */
+        
+        /* FOOTER */
+        footer { background-color: var(--dark-color); color: var(--white); padding: 3rem 5%; text-align: center; }
+
+        /* LOADING SPINNER */
+        .loading { text-align: center; padding: 2rem; display: none; }
+        .fa-spinner { color: var(--primary-color); font-size: 2rem; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) { .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">
+            <a href="index.html" style="display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-hand-holding-heart"></i> Zakat Pintar
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang-kami.html">Tentang Kami</a></li>
+            <li><a href="data-mustahiq.html" style="color: var(--primary-color); font-weight: 700;">Data Mustahiq</a></li>
+            <li><a href="Penghitung zakat.html">Hitung Zakat</a></li>
+        </ul>
+        <a href="login.html" class="btn-login"><i class="fas fa-user-circle"></i> Login</a>
+    </nav>
+
+    <div class="page-header">
+        <h1>Data Mustahiq</h1>
+        <p>Database penerima zakat yang terdaftar dan terverifikasi dalam sistem.</p>
+    </div>
+
+    <section class="data-section">
+        <div class="table-container">
+            
+            <div class="table-actions">
+                <div class="search-box">
+                    <i class="fas fa-search" style="color: #9ca3af;"></i>
+                    <input type="text" id="searchInput" placeholder="Cari nama mustahiq..." onkeyup="filterTable()">
+                </div>
+                <button class="btn-add" onclick="alert('Fitur Tambah Data akan membuka Form Input')">
+                    <i class="fas fa-plus"></i> Tambah Data Baru
+                </button>
+            </div>
+
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner"></i>
+                <p style="margin-top: 10px; color: gray;">Mengambil data dari Database...</p>
+            </div>
+
+            <table id="mustahiqTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama Lengkap</th>
+                        <th>Pekerjaan</th>
+                        <th>Tanggungan</th>
+                        <th>Penghasilan (Rp)</th>
+                        <th>Status</th>
+                        </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Zakat Pintar - UNIDA Gontor</h3>
+            <p>&copy; 2025 Tim Peneliti Informatika.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- KONFIGURASI ---
+        const useRealDatabase = false; 
+        const apiUrl = 'http://localhost:3000/api/mustahiq'; 
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchDataMustahiq();
+        });
+
+        // --- FUNGSI AMBIL DATA ---
+        async function fetchDataMustahiq() {
+            const tableBody = document.getElementById('tableBody');
+            const loading = document.getElementById('loading');
+            
+            // Tampilkan Loading
+            loading.style.display = 'block';
+            tableBody.innerHTML = '';
+
+            try {
+                let data = [];
+
+                if (useRealDatabase) {
+                    const response = await fetch(apiUrl);
+                    data = await response.json();
+                } else {
+                    // --- SIMULASI DATA (DUMMY) ---
+                    await new Promise(r => setTimeout(r, 1000));
+                    data = [
+                        { id: 1, nama: "Pak Yanto", pekerjaan: "Buruh Lepas", tanggungan: "5 Orang", penghasilan: 500000, status: "verified" },
+                        { id: 2, nama: "Ibu Susi", pekerjaan: "Tidak Bekerja", tanggungan: "2 Orang", penghasilan: 200000, status: "verified" },
+                        { id: 3, nama: "Mbah Karto", pekerjaan: "Petani", tanggungan: "1 Orang", penghasilan: 400000, status: "pending" },
+                        { id: 4, nama: "Ahmad Santoso", pekerjaan: "Ojek Online", tanggungan: "3 Orang", penghasilan: 1200000, status: "verified" },
+                        { id: 5, nama: "Siti Aminah", pekerjaan: "Janda", tanggungan: "4 Orang", penghasilan: 300000, status: "verified" }
+                    ];
+                }
+
+                populateTable(data);
+
+            } catch (error) {
+                console.error("Gagal mengambil data:", error);
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Gagal memuat data database.</td></tr>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // --- FUNGSI ISI TABEL ---
+        function populateTable(data) {
+            const tableBody = document.getElementById('tableBody');
+            
+            data.forEach(item => {
+                let badgeClass = item.status === 'verified' ? 'badge verified' : 'badge pending';
+                let statusText = item.status === 'verified' ? 'Terverifikasi' : 'Menunggu';
+
+                // Kolom Aksi dihapus dari variabel 'row' di bawah ini
+                let row = `
+                    <tr>
+                        <td>#${item.id}</td>
+                        <td style="font-weight:600; color:var(--dark-color);">${item.nama}</td>
+                        <td>${item.pekerjaan}</td>
+                        <td>${item.tanggungan}</td>
+                        <td>Rp ${new Intl.NumberFormat('id-ID').format(item.penghasilan)}</td>
+                        <td><span class="${badgeClass}">${statusText}</span></td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // --- FUNGSI SEARCH ---
+        function filterTable() {
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toUpperCase();
+            let table = document.getElementById("mustahiqTable");
+            let tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1]; // Kolom Nama
+                if (td) {
+                    let txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
+    </script>
+
+</body>
+</html>
