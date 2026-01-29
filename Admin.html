@@ -17,244 +17,157 @@
             --dark-color: #1f2937;
             --light-bg: #f3f4f6;
             --white: #ffffff;
-            --gray: #9ca3af;
-            --sidebar-width: 260px;
+            --gray: #6b7280;
+            --sidebar-width: 280px;
             --transition: all 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--light-bg);
-            display: flex;
-            min-height: 100vh;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--light-bg); display: flex; min-height: 100vh; color: var(--dark-color); }
 
         /* --- SIDEBAR --- */
         .sidebar {
             width: var(--sidebar-width);
             background-color: var(--primary-color);
             color: var(--white);
-            position: fixed;
-            height: 100%;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-            z-index: 100;
+            position: fixed; height: 100%; left: 0; top: 0;
+            display: flex; flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 100;
         }
 
         .sidebar-brand {
-            padding: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
+            padding: 2rem 1.5rem;
+            font-size: 1.4rem; font-weight: 700;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(0,0,0,0.1);
         }
 
-        .sidebar-menu {
-            flex: 1;
-            padding: 1rem 0;
-            list-style: none;
-        }
-
+        .sidebar-menu { flex: 1; padding: 1.5rem 0; list-style: none; overflow-y: auto; }
+        .sidebar-menu li { margin-bottom: 5px; }
+        
         .sidebar-menu li a {
-            display: flex;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: var(--transition);
-            gap: 15px;
-            font-size: 0.95rem;
+            display: flex; align-items: center; padding: 1rem 1.5rem;
+            color: rgba(255,255,255,0.85); text-decoration: none;
+            transition: var(--transition); gap: 15px; font-size: 0.95rem; font-weight: 500;
         }
-
+        
         .sidebar-menu li a:hover, .sidebar-menu li a.active {
-            background-color: var(--primary-dark);
-            color: var(--white);
-            border-left: 4px solid var(--secondary-color);
+            background-color: var(--primary-dark); color: var(--white);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: calc(1.5rem - 5px);
         }
 
-        .sidebar-footer {
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
+        .sidebar-footer { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
         .btn-logout {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: var(--white);
-            cursor: pointer;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: var(--transition);
+            width: 100%; padding: 0.8rem; background: rgba(255,0,0,0.15);
+            border: 1px solid rgba(255,0,0,0.2); color: #fca5a5;
+            cursor: pointer; border-radius: 8px; display: flex;
+            align-items: center; justify-content: center; gap: 10px;
+            transition: var(--transition); font-weight: 600;
         }
-        .btn-logout:hover { background: #ef4444; }
+        .btn-logout:hover { background: #ef4444; color: white; border-color: #ef4444; }
 
         /* --- MAIN CONTENT --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 2rem;
-        }
+        .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 2rem 2.5rem; }
 
-        /* Top Header */
+        /* Header */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;
+            background: var(--white); padding: 1rem 1.5rem; border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .header h2 { color: var(--dark-color); font-size: 1.5rem; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .user-avatar {
+            width: 45px; height: 45px; border-radius: 50%; background-color: #d1fae5;
+            color: var(--primary-color); display: flex; align-items: center;
+            justify-content: center; font-size: 1.2rem; border: 2px solid var(--primary-color);
         }
 
-        .header h2 { color: var(--dark-color); }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .user-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-        }
-
-        /* --- CARDS STATISTIK --- */
+        /* Stats Cards */
         .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem; margin-bottom: 2.5rem;
         }
 
         .card {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid var(--primary-color);
+            background: var(--white); padding: 1.5rem; border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex;
+            justify-content: space-between; align-items: flex-start;
+            border: 1px solid #f3f4f6; transition: transform 0.2s;
         }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-        .card-info h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark-color);
-        }
-        .card-info p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
+        .card-info h3 { font-size: 1.8rem; font-weight: 700; color: var(--dark-color); margin: 5px 0; }
+        .card-info p { color: var(--gray); font-size: 0.9rem; font-weight: 500; }
         .card-icon {
-            font-size: 2.5rem;
-            color: #d1fae5; /* Hijau pudar */
+            width: 50px; height: 50px; border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; font-size: 1.5rem;
         }
-        
-        /* Specific Card Colors */
-        .card.money { border-left-color: var(--secondary-color); }
-        .card.money .card-icon { color: #fde68a; }
 
-        /* --- TABLES SECTION --- */
+        /* Color Themes for Cards */
+        .card.money .card-icon { background: #ecfdf5; color: var(--primary-color); }
+        .card.users .card-icon { background: #eff6ff; color: #3b82f6; }
+        .card.mustahiq .card-icon { background: #fff7ed; color: #f97316; }
+        .card.chart .card-icon { background: #fefce8; color: #eab308; }
+
+        /* Tables Section */
         .table-section {
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            background: var(--white); border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); padding: 1.5rem; margin-bottom: 2.5rem;
+            border: 1px solid #f3f4f6;
         }
 
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; border-bottom: 2px solid #f3f4f6; padding-bottom: 1rem;
         }
+        .section-header h3 { font-size: 1.1rem; color: var(--dark-color); display: flex; align-items: center; gap: 10px; }
         
-        .section-header h3 { font-size: 1.2rem; color: var(--dark-color); }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            background: var(--primary-color);
-            color: var(--white);
-            border-radius: 6px;
-            font-size: 0.85rem;
-            text-decoration: none;
+        .btn-refresh {
+            background: none; border: none; color: var(--primary-color);
+            cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px;
+            transition: 0.3s;
         }
+        .btn-refresh:hover { color: var(--primary-dark); }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
+        /* Table Design */
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
         th {
-            background-color: #f9fafb;
-            color: var(--gray);
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
+            background-color: #f9fafb; color: var(--gray); font-weight: 600;
+            font-size: 0.85rem; text-transform: uppercase; padding: 1rem;
+            text-align: left; border-bottom: 2px solid #e5e7eb;
         }
+        td {
+            padding: 1rem; border-bottom: 1px solid #f3f4f6;
+            font-size: 0.95rem; color: var(--dark-color); vertical-align: middle;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f9fafb; }
 
-        td { font-size: 0.95rem; color: var(--dark-color); }
-        
         /* Status Badges */
-        .badge {
-            padding: 5px 10px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
+        .badge { padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; }
         .badge.success { background-color: #d1fae5; color: #065f46; }
         .badge.warning { background-color: #fef3c7; color: #92400e; }
+        .badge.danger { background-color: #fee2e2; color: #991b1b; }
 
-        /* Ranking Number */
+        /* Rank Circle */
         .rank-circle {
-            width: 30px;
-            height: 30px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.8rem;
+            width: 32px; height: 32px; background-color: var(--primary-color);
+            color: var(--white); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-weight: 700;
+            font-size: 0.9rem; box-shadow: 0 2px 5px rgba(4, 120, 87, 0.3);
         }
-        
-        /* Responsive Table */
-        @media (max-width: 768px) {
-            .sidebar { display: none; } /* Hide sidebar on mobile for simplicity */
-            .main-content { margin-left: 0; }
+
+        /* Detail Text for WP */
+        .wp-details { font-size: 0.8rem; color: #6b7280; margin-top: 4px; }
+        .wp-score { font-weight: 700; color: var(--primary-color); font-size: 1rem; }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 1rem; }
             .cards-grid { grid-template-columns: 1fr; }
             table { display: block; overflow-x: auto; }
         }
@@ -267,15 +180,16 @@
             <i class="fas fa-hand-holding-heart"></i> Zakat Pintar
         </div>
         <ul class="sidebar-menu">
-            <li><a href="#" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-users"></i> Data Muzaki (Pembayar)</a></li>
-            <li><a href="#"><i class="fas fa-sort-amount-down"></i> Prioritas Mustahiq</a></li>
-            <li><a href="laporan.html"><i class="fas fa-file-alt"></i> Laporan Keuangan</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Pengaturan WP</a></li>
+            <li><a href="#" class="active"><i class="fas fa-th-large"></i> Dashboard Utama</a></li>
+            <li><a href="data-mustahiq.html"><i class="fas fa-users"></i> Data Mustahiq</a></li>
+            <li><a href="#"><i class="fas fa-money-bill-wave"></i> Transaksi Muzaki</a></li>
+            <li><a href="#"><i class="fas fa-calculator"></i> Hitung WP</a></li>
+            <li><a href="#"><i class="fas fa-print"></i> Laporan Distribusi</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Pengaturan Sistem</a></li>
         </ul>
         <div class="sidebar-footer">
             <button class="btn-logout" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> Keluar Sistem
             </button>
         </div>
     </aside>
@@ -284,16 +198,18 @@
         
         <header class="header">
             <div>
-                <h2>Dashboard Overview</h2>
-                <p style="color: gray;">Monitoring data zakat dan hasil perhitungan Weighted Product.</p>
+                <h2 id="greeting">Dashboard Admin</h2>
+                <p style="color: var(--gray); font-size: 0.9rem;">
+                    <i class="far fa-calendar-alt"></i> <span id="currentDate">Memuat tanggal...</span>
+                </p>
             </div>
             <div class="user-info">
-                <div style="text-align: right; margin-right: 10px;">
-                    <h4 style="font-size: 0.9rem;">Admin Baznas</h4>
-                    <span style="font-size: 0.75rem; color: gray;">Administrator</span>
+                <div style="text-align: right;">
+                    <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Administrator</h4>
+                    <span style="font-size: 0.8rem; color: var(--primary-color); font-weight: 600; background: #d1fae5; padding: 2px 8px; border-radius: 4px;">Super Admin</span>
                 </div>
-                <div class="user-img">
-                    <i class="fas fa-user"></i>
+                <div class="user-avatar">
+                    <i class="fas fa-user-shield"></i>
                 </div>
             </div>
         </header>
@@ -301,54 +217,46 @@
         <div class="cards-grid">
             <div class="card money">
                 <div class="card-info">
-                    <h3>Rp 45.2Jt</h3>
-                    <p>Total Dana Terkumpul</p>
+                    <h3 id="totalDana">Rp 0</h3>
+                    <p>Total Dana Zakat</p>
                 </div>
-                <div class="card-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
+                <div class="card-icon"><i class="fas fa-wallet"></i></div>
             </div>
 
-            <div class="card">
+            <div class="card users">
                 <div class="card-info">
-                    <h3>128</h3>
-                    <p>Total Muzaki (Donatur)</p>
+                    <h3 id="totalMuzaki">0</h3>
+                    <p>Total Transaksi</p>
                 </div>
-                <div class="card-icon">
-                    <i class="fas fa-user-check"></i>
-                </div>
+                <div class="card-icon"><i class="fas fa-receipt"></i></div>
             </div>
 
-            <div class="card">
+            <div class="card mustahiq">
                 <div class="card-info">
-                    <h3>45</h3>
-                    <p>Data Mustahiq Terverifikasi</p>
+                    <h3 id="totalMustahiq">0</h3>
+                    <p>Mustahiq Terdaftar</p>
                 </div>
-                <div class="card-icon">
-                    <i class="fas fa-users"></i>
-                </div>
+                <div class="card-icon"><i class="fas fa-users"></i></div>
             </div>
 
-            <div class="card">
+            <div class="card chart">
                 <div class="card-info">
-                    <h3>85%</h3>
-                    <p>Target Penyaluran</p>
+                    <h3 id="targetSalur">0%</h3>
+                    <p>Realisasi Penyaluran</p>
                 </div>
-                <div class="card-icon">
-                    <i class="fas fa-chart-pie"></i>
-                </div>
+                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
             </div>
         </div>
 
         <div class="table-section">
             <div class="section-header">
-                <h3><i class="fas fa-history"></i> Transaksi Zakat Terbaru (Muzaki)</h3>
-                <a href="#" class="btn-sm">Lihat Semua</a>
+                <h3><i class="fas fa-history" style="color: var(--primary-color);"></i> Transaksi Zakat Masuk (Real-time)</h3>
+                <button class="btn-refresh" onclick="renderTransactions()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th>ID Transaksi</th>
                         <th>Nama Muzaki</th>
                         <th>Jenis Zakat</th>
                         <th>Tanggal</th>
@@ -356,103 +264,186 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>H. Abdullah</td>
-                        <td>Zakat Maal</td>
-                        <td>17 Des 2025</td>
-                        <td>Rp 2.500.000</td>
-                        <td><span class="badge success">Terverifikasi</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Siti Aminah</td>
-                        <td>Zakat Fitrah</td>
-                        <td>16 Des 2025</td>
-                        <td>Rp 45.000</td>
-                        <td><span class="badge success">Terverifikasi</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Budi Santoso</td>
-                        <td>Infaq</td>
-                        <td>16 Des 2025</td>
-                        <td>Rp 100.000</td>
-                        <td><span class="badge warning">Menunggu Konfirmasi</span></td>
-                    </tr>
-                </tbody>
+                <tbody id="transactionBody">
+                    </tbody>
             </table>
         </div>
 
         <div class="table-section">
             <div class="section-header">
-                <h3><i class="fas fa-trophy"></i> Hasil Perankingan Mustahiq (Metode Weighted Product)</h3>
-                <a href="#" class="btn-sm">Hitung Ulang</a>
+                <h3><i class="fas fa-trophy" style="color: var(--secondary-color);"></i> Hasil Perankingan Mustahiq (Metode WP)</h3>
+                <button class="btn-refresh" onclick="alert('Menghitung ulang bobot vektor...')"><i class="fas fa-calculator"></i> Hitung Ulang</button>
             </div>
-            <div style="margin-bottom: 15px; font-size: 0.9rem; color: #666; background: #ecfdf5; padding: 10px; border-radius: 6px;">
-                <i class="fas fa-info-circle"></i> 
-                Data diurutkan berdasarkan <strong>Nilai V (Preferensi)</strong> tertinggi. Semakin tinggi nilai V, semakin berhak menerima zakat.
+            <div style="margin-bottom: 20px; background: #fffbeb; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color); font-size: 0.9rem; color: #92400e;">
+                <i class="fas fa-info-circle"></i> <strong>Informasi Metode:</strong> 
+                Data diurutkan berdasarkan <strong>Nilai Vektor V</strong> tertinggi. 
+                <br>Kriteria: <strong>C1</strong> (Ekonomi), <strong>C2</strong> (Jumlah Tanggungan), <strong>C3</strong> (Kondisi Rumah).
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th>Peringkat</th>
+                        <th width="5%">Rank</th>
                         <th>Nama Mustahiq</th>
-                        <th>Kriteria Ekonomi (C1)</th>
-                        <th>Tanggungan (C2)</th>
-                        <th>Kondisi Rumah (C3)</th>
-                        <th>Nilai V (Skor)</th>
-                        <th>Aksi</th>
+                        <th>Detail Kriteria (Bobot)</th>
+                        <th>Nilai Vektor S</th>
+                        <th>Nilai V (Preferensi)</th>
+                        <th>Keputusan</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="rank-circle">1</div></td>
-                        <td><strong>Pak Yanto (Buruh)</strong></td>
-                        <td>Rp 500rb/bln</td>
-                        <td>5 Orang</td>
-                        <td>Semi Permanen</td>
-                        <td style="font-weight: bold; color: var(--primary-color);">0.2450</td>
-                        <td><a href="#" class="btn-sm">Salurkan</a></td>
-                    </tr>
-                    <tr>
-                        <td><div class="rank-circle">2</div></td>
-                        <td><strong>Ibu Susi (Janda)</strong></td>
-                        <td>Rp 300rb/bln</td>
-                        <td>2 Orang</td>
-                        <td>Kayu/Papan</td>
-                        <td style="font-weight: bold; color: var(--primary-color);">0.2115</td>
-                        <td><a href="#" class="btn-sm">Salurkan</a></td>
-                    </tr>
-                    <tr>
-                        <td><div class="rank-circle">3</div></td>
-                        <td><strong>Mbah Karto (Lansia)</strong></td>
-                        <td>Tidak Ada</td>
-                        <td>1 Orang</td>
-                        <td>Kurang Layak</td>
-                        <td style="font-weight: bold; color: var(--primary-color);">0.1980</td>
-                        <td><a href="#" class="btn-sm">Salurkan</a></td>
-                    </tr>
-                </tbody>
+                <tbody id="mustahiqBody">
+                    </tbody>
             </table>
         </div>
 
     </main>
 
     <script>
-        // Fungsi Logout Sederhana
+        // --- 1. KONFIGURASI DAN DATA SIMULASI (MOCK DATA) ---
+        // Di sistem asli, data ini diambil dari API Aiven/Database.
+        // Di sini kita buat struktur data yang profesional agar terlihat nyata.
+
+        const transactionsData = [
+            { id: "TRX-88291", nama: "H. Abdullah", jenis: "Zakat Maal", tanggal: "Hari Ini, 09:30", nominal: 2500000, status: "success" },
+            { id: "TRX-88292", nama: "Siti Aminah", jenis: "Zakat Fitrah", tanggal: "Hari Ini, 10:15", nominal: 45000, status: "success" },
+            { id: "TRX-88293", nama: "Budi Santoso", jenis: "Infaq", tanggal: "Kemarin, 14:20", nominal: 100000, status: "success" },
+            { id: "TRX-88294", nama: "Rina Wati", jenis: "Zakat Maal", tanggal: "Kemarin, 16:45", nominal: 5000000, status: "pending" },
+            { id: "TRX-88295", nama: "CV. Berkah Jaya", jenis: "Zakat Perusahaan", tanggal: "27 Jan 2026", nominal: 10000000, status: "success" }
+        ];
+
+        const mustahiqRankingData = [
+            { 
+                rank: 1, nama: "Pak Yanto (Buruh)", 
+                c1: "Rendah (Rp 500rb)", c2: "Banyak (5 Org)", c3: "Semi Permanen", 
+                vectorS: 0.2450, vectorV: 0.352, status: "Prioritas Utama" 
+            },
+            { 
+                rank: 2, nama: "Ibu Susi (Janda)", 
+                c1: "Sangat Rendah (Rp 300rb)", c2: "Sedang (2 Org)", c3: "Papan/Kayu", 
+                vectorS: 0.2115, vectorV: 0.301, status: "Prioritas Tinggi" 
+            },
+            { 
+                rank: 3, nama: "Mbah Karto (Lansia)", 
+                c1: "Tidak Ada", c2: "Sedikit (1 Org)", c3: "Kurang Layak", 
+                vectorS: 0.1980, vectorV: 0.285, status: "Prioritas Sedang" 
+            },
+            { 
+                rank: 4, nama: "Ahmad (Ojol)", 
+                c1: "Cukup (Rp 1.5jt)", c2: "Banyak (3 Org)", c3: "Kontrakan", 
+                vectorS: 0.1540, vectorV: 0.062, status: "Cadangan" 
+            }
+        ];
+
+        // --- 2. FUNGSI UTAMA SAAT LOAD ---
+        document.addEventListener("DOMContentLoaded", () => {
+            setCurrentDate();
+            renderStats();
+            renderTransactions();
+            renderMustahiqRanking();
+        });
+
+        // Menampilkan Tanggal Hari Ini
+        function setCurrentDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('id-ID', options);
+            document.getElementById('currentDate').innerText = today;
+            
+            // Ucapan Selamat Berdasarkan Waktu
+            const hour = new Date().getHours();
+            let greeting = "Selamat Pagi, Admin";
+            if(hour >= 12) greeting = "Selamat Siang, Admin";
+            if(hour >= 15) greeting = "Selamat Sore, Admin";
+            if(hour >= 18) greeting = "Selamat Malam, Admin";
+            document.getElementById('greeting').innerText = greeting;
+        }
+
+        // --- 3. RENDER STATISTIK (Dihitung dari Data) ---
+        function renderStats() {
+            // Hitung Total Dana dari Data Transaksi yang statusnya 'success'
+            let totalDana = transactionsData
+                .filter(t => t.status === 'success')
+                .reduce((acc, curr) => acc + curr.nominal, 0);
+            
+            // Update UI
+            document.getElementById('totalDana').innerText = formatRupiah(totalDana);
+            document.getElementById('totalMuzaki').innerText = transactionsData.length;
+            document.getElementById('totalMustahiq').innerText = mustahiqRankingData.length;
+            
+            // Simulasi Target (Misal target penyaluran 80%)
+            document.getElementById('targetSalur').innerText = "85%";
+        }
+
+        // --- 4. RENDER TABEL TRANSAKSI ---
+        function renderTransactions() {
+            const tbody = document.getElementById('transactionBody');
+            tbody.innerHTML = ''; // Reset isi
+
+            transactionsData.forEach(trx => {
+                let badgeClass = trx.status === 'success' ? 'badge success' : 'badge warning';
+                let badgeText = trx.status === 'success' ? 'Terverifikasi' : 'Menunggu';
+                
+                let row = `
+                    <tr>
+                        <td><span style="font-family: monospace; color: var(--primary-color); font-weight:600;">${trx.id}</span></td>
+                        <td><strong>${trx.nama}</strong></td>
+                        <td>${trx.jenis}</td>
+                        <td>${trx.tanggal}</td>
+                        <td style="font-weight: 600;">${formatRupiah(trx.nominal)}</td>
+                        <td><span class="${badgeClass}">${badgeText}</span></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // --- 5. RENDER TABEL MUSTAHIQ (WP METHOD) ---
+        function renderMustahiqRanking() {
+            const tbody = document.getElementById('mustahiqBody');
+            tbody.innerHTML = '';
+
+            mustahiqRankingData.forEach(data => {
+                let actionBtn = `<button class="badge success" style="border:none; cursor:pointer;">Salurkan</button>`;
+                if(data.status === "Cadangan") actionBtn = `<button class="badge warning" style="border:none; cursor:pointer;">Tinjau</button>`;
+
+                let row = `
+                    <tr>
+                        <td><div class="rank-circle">${data.rank}</div></td>
+                        <td>
+                            <div style="font-weight: 600;">${data.nama}</div>
+                            <div style="font-size: 0.8rem; color: #6b7280;">ID: MST-${100 + data.rank}</div>
+                        </td>
+                        <td>
+                            <div class="wp-details">C1: ${data.c1}</div>
+                            <div class="wp-details">C2: ${data.c2}</div>
+                            <div class="wp-details">C3: ${data.c3}</div>
+                        </td>
+                        <td>${data.vectorS.toFixed(4)}</td>
+                        <td>
+                            <div class="wp-score">${data.vectorV.toFixed(3)}</div>
+                        </td>
+                        <td>
+                            ${actionBtn}
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Helper Format Rupiah
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(angka);
+        }
+
+        // Logout
         function logout() {
-            let confirmAction = confirm("Apakah Anda yakin ingin keluar?");
-            if (confirmAction) {
-                window.location.href = "login.html"; // Redirect ke halaman login
+            if(confirm("Apakah Anda yakin ingin keluar dari Dashboard?")) {
+                window.location.href = "login.html";
             }
         }
-        
-        // Animasi angka saat load (Opsional, pemanis)
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("Dashboard Admin Siap Digunakan.");
-        });
     </script>
 
 </body>
