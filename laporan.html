@@ -1,315 +1,282 @@
-Tentu, ini adalah halaman Laporan Keuangan & Distribusi yang dirancang khusus agar terlihat profesional seperti laporan akuntansi resmi.
-
-Fitur utama dari desain ini:
-
-    Responsive Table: Tabel dibungkus dalam container yang bisa digeser (scroll) ke samping di HP, sehingga kolom tidak hancur/gepeng.
-
-    Siap Cetak: Tombol "Cetak Laporan" akan memicu fitur print browser dengan tampilan yang rapi (saya sembunyikan sidebar saat mode print).
-
-    Visualisasi Arus Kas: Menggunakan warna Hijau untuk Pemasukan (Zakat Masuk) dan Merah untuk Pengeluaran (Penyaluran), memudahkan monitoring.
-
-Silakan buat file baru bernama laporan.html.
-Kode Lengkap: laporan.html
-HTML
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Zakat - Zakat Pintar</title>
+    <title>Laporan Distribusi Zakat</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CSS VARIABLES --- */
+        /* --- 1. TAMPILAN LAYAR (WEB VIEW) --- */
         :root {
-            --primary-color: #047857;
-            --primary-dark: #064e3b;
-            --secondary-color: #fbbf24;
-            --dark-color: #1f2937;
-            --light-bg: #f3f4f6;
-            --white: #ffffff;
-            --danger: #ef4444;
-            --success: #10b981;
-            --sidebar-width: 280px;
-            --border-color: #e5e7eb;
-            --transition: all 0.3s ease;
+            --primary: #047857;
+            --bg: #f3f4f6;
+            --text: #1f2937;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--light-bg); display: flex; min-height: 100vh; color: var(--dark-color); }
+        body {
+            background: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+        }
 
-        /* --- SIDEBAR (Sama dengan Admin) --- */
+        /* Sidebar Sederhana */
         .sidebar {
-            width: var(--sidebar-width); background-color: var(--primary-color); color: var(--white);
-            position: fixed; height: 100%; left: 0; top: 0; display: flex; flex-direction: column;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 100;
+            width: 250px;
+            background: var(--primary);
+            color: white;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            position: fixed;
         }
-        .sidebar-brand {
-            padding: 2rem 1.5rem; font-size: 1.4rem; font-weight: 700;
-            border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px;
+        .sidebar h2 { font-size: 1.2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; }
+        .menu a {
+            display: block; color: rgba(255,255,255,0.8); text-decoration: none;
+            padding: 10px 15px; margin-bottom: 5px; border-radius: 6px; transition: 0.3s;
         }
-        .sidebar-menu { flex: 1; padding: 1.5rem 0; list-style: none; overflow-y: auto; }
-        .sidebar-menu li a {
-            display: flex; align-items: center; padding: 1rem 1.5rem; color: rgba(255,255,255,0.85);
-            text-decoration: none; transition: var(--transition); gap: 15px; font-size: 0.95rem; font-weight: 500;
-        }
-        .sidebar-menu li a:hover, .sidebar-menu li a.active {
-            background-color: var(--primary-dark); border-left: 5px solid var(--secondary-color);
+        .menu a:hover, .menu a.active { background: rgba(0,0,0,0.2); color: white; font-weight: 600; }
+
+        /* Konten Utama */
+        .main { margin-left: 250px; padding: 2rem; width: 100%; }
+
+        .header-ui {
+            background: white; padding: 1.5rem; border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex;
+            justify-content: space-between; align-items: center; margin-bottom: 2rem;
         }
 
-        /* --- MAIN CONTENT --- */
-        .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 2rem 2.5rem; }
-
-        /* REPORT HEADER */
-        .report-header {
-            background: var(--white); padding: 1.5rem 2rem; border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; justify-content: space-between;
-            align-items: center; margin-bottom: 2rem; border: 1px solid var(--border-color);
-            flex-wrap: wrap; gap: 15px;
-        }
-        
-        .header-title h2 { font-size: 1.5rem; color: var(--dark-color); }
-        .header-title p { color: #6b7280; font-size: 0.9rem; }
-
-        .header-actions { display: flex; gap: 10px; }
-        
         .btn {
-            padding: 0.6rem 1.2rem; border-radius: 8px; border: none; font-weight: 600;
-            cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
-            transition: var(--transition); text-decoration: none;
+            background: var(--primary); color: white; border: none;
+            padding: 10px 20px; border-radius: 6px; cursor: pointer;
+            font-weight: 600; display: flex; align-items: center; gap: 8px;
+            transition: 0.3s; text-decoration: none; font-size: 0.9rem;
         }
-        .btn-print { background-color: var(--dark-color); color: var(--white); }
-        .btn-print:hover { background-color: #000; }
-        
-        .btn-export { background-color: var(--primary-color); color: var(--white); }
-        .btn-export:hover { background-color: var(--primary-dark); }
-        
-        .btn-back { background-color: #e5e7eb; color: var(--dark-color); }
-        .btn-back:hover { background-color: #d1d5db; }
+        .btn:hover { background: #064e3b; }
+        .btn-back { background: #e5e7eb; color: #333; }
+        .btn-back:hover { background: #d1d5db; }
 
-        /* SUMMARY CARDS (Kecil di atas tabel) */
-        .summary-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem; margin-bottom: 2rem;
+        /* Tabel Layar */
+        .table-container {
+            background: white; border-radius: 10px; padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .summary-card {
-            background: var(--white); padding: 1.2rem; border-radius: 10px;
-            border: 1px solid var(--border-color);
-        }
-        .summary-label { font-size: 0.85rem; color: #6b7280; font-weight: 600; text-transform: uppercase; }
-        .summary-value { font-size: 1.5rem; font-weight: 700; margin-top: 5px; }
-        .text-success { color: var(--success); }
-        .text-danger { color: var(--danger); }
-        .text-dark { color: var(--dark-color); }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; background: #f9fafb; padding: 12px; font-size: 0.9rem; color: #555; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .in { background: #d1fae5; color: #065f46; }
+        .out { background: #fee2e2; color: #991b1b; }
 
-        /* --- PROFESSIONAL TABLE --- */
-        .table-wrapper {
-            background: var(--white); border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            border: 1px solid var(--border-color); overflow: hidden;
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto; /* KUNCI RESPONSIF DI HP */
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table { width: 100%; border-collapse: collapse; min-width: 800px; /* Agar tidak gepeng */ }
-
-        thead { background-color: #f8fafc; border-bottom: 2px solid var(--border-color); }
-        
-        th {
-            padding: 1rem 1.5rem; text-align: left; font-size: 0.8rem; font-weight: 700;
-            color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-
-        tbody tr { border-bottom: 1px solid #f1f5f9; transition: background 0.2s; }
-        tbody tr:last-child { border-bottom: none; }
-        tbody tr:hover { background-color: #f8fafc; }
-
-        td { padding: 1rem 1.5rem; font-size: 0.95rem; color: #334155; vertical-align: middle; }
-
-        /* Kolom Khusus */
-        .col-id { font-family: 'Roboto Mono', monospace; color: #64748b; font-size: 0.85rem; }
-        .col-nominal { font-family: 'Roboto Mono', monospace; font-weight: 600; text-align: right; }
-        .col-date { white-space: nowrap; color: #64748b; font-size: 0.9rem; }
-
-        /* Badge Tipe Transaksi */
-        .type-badge {
-            display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
-            border-radius: 6px; font-size: 0.8rem; font-weight: 600;
-        }
-        .type-in { background-color: #d1fae5; color: #065f46; } /* Masuk (Hijau) */
-        .type-out { background-color: #fee2e2; color: #991b1b; } /* Keluar (Merah) */
-
-        /* --- PRINT MODE --- */
+        /* --- 2. TAMPILAN CETAK (PRINT VIEW) - IMPROVISASI --- */
         @media print {
-            .sidebar, .btn, .no-print { display: none !important; }
-            .main-content { margin: 0; padding: 0; }
-            body { background: white; }
-            .table-wrapper { border: none; box-shadow: none; }
-            table { min-width: 100%; }
+            /* Sembunyikan elemen Web */
+            .sidebar, .btn, .header-ui, .no-print { display: none !important; }
+            
+            /* Reset Margin & Font */
+            @page { size: A4; margin: 2cm; }
+            body { 
+                background: white; color: black; margin: 0; 
+                font-family: 'Times New Roman', serif; /* Font Resmi */
+            }
+            .main { margin: 0; padding: 0; width: 100%; }
+            .table-container { box-shadow: none; padding: 0; }
+
+            /* KOP SURAT */
+            .print-kop {
+                text-align: center; border-bottom: 3px double black;
+                padding-bottom: 15px; margin-bottom: 20px;
+                display: block !important; /* Paksa muncul */
+            }
+            .print-kop h1 { font-size: 16pt; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+            .print-kop h2 { font-size: 12pt; margin: 5px 0; font-weight: bold; }
+            .print-kop p { font-size: 10pt; margin: 0; font-style: italic; }
+
+            /* Judul Laporan */
+            .print-title {
+                text-align: center; font-size: 14pt; font-weight: bold;
+                text-decoration: underline; margin-bottom: 5px; display: block !important;
+            }
+            .print-subtitle {
+                text-align: center; font-size: 11pt; margin-bottom: 20px; display: block !important;
+            }
+
+            /* Tabel Hitam Putih */
+            table { border: 1px solid black; width: 100%; font-size: 11pt; }
+            th { 
+                border: 1px solid black; background-color: #e5e5e5 !important; 
+                color: black; text-align: center; font-weight: bold; padding: 8px;
+            }
+            td { border: 1px solid black; padding: 6px 8px; color: black; }
+            
+            /* Footer Tabel (Total) */
+            tfoot { display: table-row-group !important; font-weight: bold; background: #f0f0f0; }
+            
+            /* Hapus Badge Warna saat Print */
+            .badge { background: none !important; color: black !important; padding: 0; font-weight: normal; }
+
+            /* Area Tanda Tangan */
+            .signature-section {
+                display: flex !important; justify-content: space-between;
+                margin-top: 50px; page-break-inside: avoid;
+            }
+            .sign-box { width: 220px; text-align: center; font-size: 11pt; }
+            .sign-space { height: 70px; }
+            .sign-name { font-weight: bold; text-decoration: underline; }
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; padding: 1rem; }
-            .header-actions { width: 100%; justify-content: space-between; margin-top: 10px; }
-            .btn { flex: 1; justify-content: center; }
-            /* Tabel akan scroll ke samping berkat .table-responsive */
-        }
+        /* Helper agar elemen print tersembunyi di layar biasa */
+        .print-kop, .print-title, .print-subtitle, .signature-section { display: none; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <i class="fas fa-hand-holding-heart"></i> Zakat Pintar
+    <div class="sidebar">
+        <h2><i class="fas fa-hand-holding-heart"></i> Zakat Pintar</h2>
+        <div class="menu">
+            <a href="admin.html"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="laporan.html" class="active"><i class="fas fa-print"></i> Laporan</a>
+            <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
-        <ul class="sidebar-menu">
-            <li><a href="admin.html"><i class="fas fa-th-large"></i> Dashboard Utama</a></li>
-            <li><a href="data-mustahiq.html"><i class="fas fa-users"></i> Data Mustahiq</a></li>
-            <li><a href="laporan.html" class="active"><i class="fas fa-print"></i> Laporan Distribusi</a></li>
-            <li><a href="login.html" onclick="return confirm('Keluar?')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-    </aside>
+    </div>
 
-    <main class="main-content">
-        
-        <div class="report-header">
-            <div class="header-title">
-                <h2>Laporan Keuangan & Distribusi</h2>
-                <p>Periode: <span id="periodeLaporan">Januari 2026</span></p>
+    <div class="main">
+
+        <div class="header-ui">
+            <div>
+                <h2 style="margin:0;">Laporan Distribusi</h2>
+                <p style="margin:5px 0 0; color:#666; font-size:0.9rem;">Preview Laporan sebelum dicetak</p>
             </div>
-            <div class="header-actions">
-                <a href="admin.html" class="btn btn-back no-print"><i class="fas fa-arrow-left"></i> Kembali</a>
-                <button class="btn btn-print" onclick="window.print()"><i class="fas fa-print"></i> Cetak</button>
-                <button class="btn btn-export no-print" onclick="alert('File Excel sedang diunduh...')"><i class="fas fa-file-excel"></i> Export Excel</button>
+            <div style="display:flex; gap:10px;">
+                <a href="admin.html" class="btn btn-back"><i class="fas fa-arrow-left"></i> Kembali</a>
+                <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Cetak Laporan</button>
             </div>
         </div>
 
-        <div class="summary-grid">
-            <div class="summary-card">
-                <div class="summary-label">Total Pemasukan</div>
-                <div class="summary-value text-success" id="totalMasuk">Rp 0</div>
+        <div class="print-kop">
+            <h1>LEMBAGA AMIL ZAKAT PINTAR</h1>
+            <h2>UNIVERSITAS DARUSSALAM GONTOR</h2>
+            <p>Jl. Raya Siman, Ponorogo, Jawa Timur 63471 | Telp: (0352) 123456</p>
+        </div>
+
+        <div class="print-title">LAPORAN ARUS KAS ZAKAT</div>
+        <div class="print-subtitle">Periode: <span id="periodeText">Januari 2026</span></div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th width="15%">Tanggal</th>
+                        <th>Keterangan Transaksi</th>
+                        <th width="10%">Jenis</th>
+                        <th width="15%" style="text-align:right;">Masuk (Rp)</th>
+                        <th width="15%" style="text-align:right;">Keluar (Rp)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align:right; padding-right:15px;">TOTAL PERIODE INI</td>
+                        <td style="text-align:right;" id="totalIn">0</td>
+                        <td style="text-align:right;" id="totalOut">0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align:right; padding-right:15px; font-size:1.1em;">SALDO AKHIR</td>
+                        <td colspan="2" style="text-align:center; font-size:1.1em;" id="totalSaldo">0</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="signature-section">
+            <div class="sign-box">
+                <p>Mengetahui,<br>Ketua Peneliti</p>
+                <div class="sign-space"></div>
+                <div class="sign-name">Abdul Wahid, M.Ag.</div>
+                <div>NIY. 123456789</div>
             </div>
-            <div class="summary-card">
-                <div class="summary-label">Total Penyaluran</div>
-                <div class="summary-value text-danger" id="totalKeluar">Rp 0</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-label">Saldo Saat Ini</div>
-                <div class="summary-value text-dark" id="saldoAkhir">Rp 0</div>
+            <div class="sign-box">
+                <p>Ponorogo, <span id="tglCetak"></span><br>Bendahara/Admin</p>
+                <div class="sign-space"></div>
+                <div class="sign-name">Elmir Yasakha M.P.</div>
+                <div>NIM. 442023611058</div>
             </div>
         </div>
 
-        <div class="table-wrapper">
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No. Ref</th>
-                            <th>Tanggal</th>
-                            <th>Keterangan Transaksi</th>
-                            <th>Tipe</th>
-                            <th>Metode</th>
-                            <th style="text-align: right;">Nominal</th>
-                        </tr>
-                    </thead>
-                    <tbody id="reportBody">
-                        </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div style="margin-top: 20px; text-align: center; color: #9ca3af; font-size: 0.85rem;" class="no-print">
-            &copy; 2026 Zakat Pintar System - Laporan digenerate otomatis.
-        </div>
-
-    </main>
+    </div>
 
     <script>
-        // --- DATA LAPORAN (Simulasi) ---
-        const reportData = [
-            { id: "TRX-001", date: "2026-01-28", desc: "Zakat Maal - H. Abdullah", type: "IN", method: "Transfer", amount: 2500000 },
-            { id: "TRX-002", date: "2026-01-28", desc: "Zakat Fitrah - Siti Aminah", type: "IN", method: "Tunai", amount: 45000 },
-            { id: "OUT-001", date: "2026-01-29", desc: "Penyaluran ke Pak Yanto (Buruh)", type: "OUT", method: "Tunai", amount: 500000 },
-            { id: "TRX-003", date: "2026-01-29", desc: "Infaq - Hamba Allah", type: "IN", method: "QRIS", amount: 100000 },
-            { id: "OUT-002", date: "2026-01-29", desc: "Penyaluran ke Ibu Susi (Janda)", type: "OUT", method: "Sembako", amount: 350000 },
-            { id: "TRX-004", date: "2026-01-30", desc: "Zakat Perusahaan - CV. Berkah", type: "IN", method: "Transfer", amount: 5000000 },
-            { id: "OUT-003", date: "2026-01-30", desc: "Bantuan Pendidikan - Anak Yatim", type: "OUT", method: "Tunai", amount: 1200000 }
+        // Data Dummy Profesional
+        const dataLaporan = [
+            { tgl: "01/02/2026", ket: "Saldo Awal Bulan", jenis: "IN", nominal: 15000000 },
+            { tgl: "03/02/2026", ket: "Zakat Maal - H. Abdullah", jenis: "IN", nominal: 2500000 },
+            { tgl: "05/02/2026", ket: "Infaq Hamba Allah (QRIS)", jenis: "IN", nominal: 150000 },
+            { tgl: "10/02/2026", ket: "Penyaluran Mustahiq - Peringkat 1 (Pak Yanto)", jenis: "OUT", nominal: 1500000 },
+            { tgl: "12/02/2026", ket: "Penyaluran Sembako 10 Paket", jenis: "OUT", nominal: 2000000 },
+            { tgl: "15/02/2026", ket: "Zakat Profesi - Dr. Rina", jenis: "IN", nominal: 1000000 },
+            { tgl: "20/02/2026", ket: "Biaya Operasional Server Website", jenis: "OUT", nominal: 200000 },
+            { tgl: "25/02/2026", ket: "Zakat Perusahaan - CV. Berkah", jenis: "IN", nominal: 5000000 }
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
             renderTable();
-            calculateSummary();
-            setPeriode();
+            setupDate();
         });
 
-        // 1. RENDER TABEL
         function renderTable() {
-            const tbody = document.getElementById('reportBody');
-            tbody.innerHTML = '';
+            const tbody = document.getElementById("tableBody");
+            let sumIn = 0;
+            let sumOut = 0;
 
-            reportData.forEach(item => {
-                // Tentukan Style berdasarkan Tipe (Masuk/Keluar)
-                let typeBadge = item.type === 'IN' 
-                    ? `<span class="type-badge type-in"><i class="fas fa-arrow-down"></i> Masuk</span>` 
-                    : `<span class="type-badge type-out"><i class="fas fa-arrow-up"></i> Keluar</span>`;
+            dataLaporan.forEach((item, index) => {
+                let masuk = item.jenis === 'IN' ? item.nominal : 0;
+                let keluar = item.jenis === 'OUT' ? item.nominal : 0;
                 
-                let nominalColor = item.type === 'IN' ? 'text-success' : 'text-danger';
-                let prefix = item.type === 'IN' ? '+' : '-';
+                sumIn += masuk;
+                sumOut += keluar;
 
                 let row = `
                     <tr>
-                        <td class="col-id">#${item.id}</td>
-                        <td class="col-date">${formatDate(item.date)}</td>
-                        <td>
-                            <div style="font-weight: 500;">${item.desc}</div>
+                        <td style="text-align:center;">${index + 1}</td>
+                        <td style="text-align:center;">${item.tgl}</td>
+                        <td>${item.ket}</td>
+                        <td style="text-align:center;">
+                            <span class="badge ${item.jenis === 'IN' ? 'in' : 'out'}">
+                                ${item.jenis === 'IN' ? 'Masuk' : 'Keluar'}
+                            </span>
                         </td>
-                        <td>${typeBadge}</td>
-                        <td style="color: #64748b; font-size: 0.9rem;">${item.method}</td>
-                        <td class="col-nominal ${nominalColor}">${prefix} ${formatRupiah(item.amount)}</td>
+                        <td style="text-align:right;">${masuk > 0 ? formatRupiah(masuk) : '-'}</td>
+                        <td style="text-align:right;">${keluar > 0 ? formatRupiah(keluar) : '-'}</td>
                     </tr>
                 `;
                 tbody.innerHTML += row;
             });
+
+            // Isi Footer Total
+            document.getElementById("totalIn").innerText = formatRupiah(sumIn);
+            document.getElementById("totalOut").innerText = formatRupiah(sumOut);
+            document.getElementById("totalSaldo").innerText = formatRupiah(sumIn - sumOut);
         }
 
-        // 2. HITUNG RINGKASAN
-        function calculateSummary() {
-            let masuk = 0;
-            let keluar = 0;
-
-            reportData.forEach(item => {
-                if (item.type === 'IN') masuk += item.amount;
-                else keluar += item.amount;
-            });
-
-            document.getElementById('totalMasuk').innerText = formatRupiah(masuk);
-            document.getElementById('totalKeluar').innerText = formatRupiah(keluar);
-            document.getElementById('saldoAkhir').innerText = formatRupiah(masuk - keluar);
-        }
-
-        // 3. UTILITIES
-        function setPeriode() {
-            const date = new Date();
-            const options = { year: 'numeric', month: 'long' };
-            document.getElementById('periodeLaporan').innerText = date.toLocaleDateString('id-ID', options);
+        function setupDate() {
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            
+            // Set Periode (Bulan Tahun Ini)
+            document.getElementById("periodeText").innerText = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
+            
+            // Set Tanggal Tanda Tangan
+            document.getElementById("tglCetak").innerText = today.toLocaleDateString('id-ID', options);
         }
 
         function formatRupiah(angka) {
-            return new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(angka);
-        }
-
-        function formatDate(dateString) {
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
+            return new Intl.NumberFormat('id-ID').format(angka);
         }
     </script>
 
